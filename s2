@@ -1,0 +1,296 @@
+'''
+A university wants to automate their admission process. Students are admitted based on marks scored in a qualifying exam.
+A student is identified by student id, age and marks in qualifying exam. Data are valid, if:
+
+Age is greater than 20
+Marks is between 0 and 100 (both inclusive)
+A student qualifies for admission, if
+
+Age and marks are valid and
+Marks is 65 or more
+Write a python program to represent the students seeking admission in the university.
+
+The details of student class are given below.
+
+Class name: Student
+
+Attributes
+(private)               student_id
+                        marks
+                        age
+
+Methods
+(public)
+
+__init__()                  Create and initialize all instance variables to None
+
+validate_marks()            If data is valid, return true. Else, return false
+
+validate_age()
+
+check_qualification()        Validate marks and age.
+                             If valid, check if marks is 65 or more.
+                             If so return true
+                             Else return false
+                              Else return false
+
+setter methods                Include setter methods for all instance variables to set its values
+
+getter methods                Include getter methods for all instance variables to get its values
+'''
+student_id_counter=10
+class Student:
+    
+    def __init__(self):
+        self.__student_id=None
+        self.__marks=None
+        self.__age=None
+
+    def validate_marks(self):
+        if self.__marks>=0 and self.__marks<=100:
+            return True
+        else:
+            return False
+
+    def validate_age(self):
+        if self.__age>20:
+            return True
+        else:
+            return False
+
+    def check_qualification(self):
+        if self.validate_age() and self.validate_marks():
+            if self.__marks>=65:
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    def set_student_id(self):
+        global student_id_counter
+        self.__student_id=student_id_counter
+        student_id_counter+=1
+
+    def set_marks(self,marks):
+        self.__marks=marks
+
+    def set_age(self,age):
+        self.__age=age
+
+    def get_student_id(self):
+        return self.__student_id
+
+    def get_marks(self):
+        return self.__marks
+
+    def get_age(self):
+        return self.__age
+
+s=Student()
+s.set_student_id(100)
+s.set_age(24)
+s.set_marks(80)
+print("student id is ",s.get_student_id())
+print(s.get_marks())
+print(s.get_age())
+print(s.check_qualification())
+
+'''
+Continuing with the previous scenario, a student eligible for admission has to choose a course and pay the fees for it. 
+If they have scored more than 85 marks in qualifying exam, they get 25% discount on fees.
+
+Valid course ids and fees are given below:
+course id	fees
+1001	    25575.0
+1002	   15500.0
+
+Extend the program written in the previous assignment to include the above requirement.
+Instance variables and methods to be included in Student class are given below.
+Class name: Student
+Attributes
+(private)	course_id
+            fees	 
+
+Methods
+(public)	
+__init__()	               Create and initialize newly created instance variables also to None
+
+choose_course(course_id)	 Accept the course_id chosen by the student.
+                             •	If course_id is valid,
+                              o	set attributes course_id and fees
+                            o	if marks is more than 85, apply 25% discount on fees
+                            o	return true
+                            •	Else, return false
+
+getter methods	             Include getter methods for newly added instance variables
+
+'''
+courses={1001:25575.0,1002:15500.0}
+class Student:
+    
+    def __init__(self):
+        self.__student_id=None
+        self.__marks=None
+        self.__age=None
+        self.__course_id=None
+        self.__fees=None
+
+    def validate_marks(self):
+        if self.__marks>=0 and self.__marks<=100:
+            return True
+        else:
+            return False
+
+    def validate_age(self):
+        if self.__age>20:
+            return True
+        else:
+            return False
+
+    def check_qualification(self):
+        if self.validate_age() and self.validate_marks():
+            if self.__marks>=65:
+                return True
+            else:
+                return False
+        else:
+            return False
+
+    def choose_course(self,course_id):
+        if course_id in courses.keys():
+            self.__course_id=course_id
+            if self.__marks>=85:
+                self.__fees=courses[course_id]*0.75
+                print("fees: ",self.__fees)
+                return True
+            else:
+                return False
+        else:
+            return False
+
+
+    def set_student_id(self,student_id):        
+        self.__student_id=student_id
+        
+    def set_marks(self,marks):
+        self.__marks=marks
+
+    def set_age(self,age):
+        self.__age=age
+
+    def get_student_id(self):
+        return self.__student_id
+
+    def get_marks(self):
+        return self.__marks
+
+    def get_age(self):
+        return self.__age
+
+    def get_course_id(self):
+        return self.__course_id
+
+    def get_fees(self):
+        return self.__fees
+
+
+s=Student()
+s.set_student_id(100)
+s.set_age(24)
+s.set_marks(89)
+print("student id is ",s.get_student_id())
+print(s.get_marks())
+print(s.get_age())
+if s.check_qualification():
+    print("student is qualified")
+    if s.choose_course(1002):
+        print("course alloted")
+    else:
+        print("invalid course")
+else:
+    print("not qualified")
+
+
+'''
+Create a class with a couple of functions like these examples.
+•	magic.replace("string", 'char1', char2') is a function that replaces all of the specified characters with another characters.
+•	magic.str_length("string") is a function that returns the length of the string.
+•	magic.trim(" string ") is a function that returns a string that truncates spaces at both the beginning and end.
+•	magic.list_slice(list, tuple) is a function that returns the items in the list that are among the specified indexes. 
+If the length of the new list is 0, return -1.
+
+Examples
+magic.replace("AzErty-QwErty", "E", "e") ➞ "Azerty-Qwerty"
+
+magic.str_length("hello world") ➞ 11
+
+magic.trim("      python is awesome      ") ➞ "python is awesome"
+
+magic.list_slice([1, 2, 3, 4, 5], (2, 4)) ➞ [ 2, 3, 4 ]
+
+'''
+
+class Magic:
+    def replace(self,string,char1,char2):
+        return string.replace(char1,char2)
+
+    def str_length(self,string):
+        return len(string)
+
+    def trim(self,string):
+        return string.strip()
+
+    def list_slice(self,lst,tple):
+        return lst[slice(tple[0]-1,tple[1])]
+
+magic=Magic()
+print(magic.replace("AzErty-QwErty", "E", "e"))
+print(magic.str_length("hello world"))
+print(magic.trim("      python is awesome      "))
+print(magic.list_slice([1, 2, 3, 4, 5], (2, 4)))
+
+'''
+Create a Person class which will have three properties:
+•	Name
+•	List of foods they like
+•	List of foods they hate
+In this class, create the method taste():
+•	It will take in a food name as a string.
+•	Return {person_name} eats the {food_name}.
+•	If the food is in the person's like list, add 'and loves it!' to the end.
+•	If it is in the person's hate list, add 'and hates it!' to the end.
+•	If it is in neither list, simply add an exclamation mark to the end.
+Examples
+p1 = Person("Sam", ["ice cream"], ["carrots"])
+p1.taste("ice cream") ➞ "Sam eats the ice cream and loves it!"
+
+p1.taste("cheese") ➞ "Sam eats the cheese!"
+
+p1.taste("carrots") ➞ "Sam eats the carrots and hates it!"
+Notes
+•	A person can have an empty list for foods they hate and/or love.
+
+'''
+
+class Person:
+    def __init__(self,name,likes,hates):
+        self.name=name
+        self.likes=likes
+        self.hates=hates
+
+    def taste(self,food):
+        if food in self.likes:
+           add=" and loves it"
+        elif food in self.hates:
+            add=" and hates it"
+        else:
+            add=""
+        return self.name+" eats the "+food+add+"!" 
+
+p=Person("Sam", ["ice cream"], ["carrots"])
+print(p.taste("ice cream") )
+
+print(p.taste("cheese") )
+
+print(p.taste("carrots"))
