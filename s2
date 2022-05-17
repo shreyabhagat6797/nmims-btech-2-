@@ -488,3 +488,77 @@ Note:
 Represent few objects of the class, initialize instance variables using setter methods, invoke appropriate methods and test your program.
 
 '''
+
+#polymorphism
+'''same function but used in different types'''
+condidtion of occurrence in different forms refers to the use of single type entity to represent different types in different scenarios
+
+print(len("python"))
+print(len(["python","java","c"]))
+print(len({"name":"python","language":"moderate"}))
+
+
+num1=4
+num2=5
+print(num1+num2)
+
+str1="python"
+str2="language"
+print(str1+" "+str2)
+
+
+class Cat:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+
+    def info(self):
+        print(f"I am cat.My name is {self.name}.I am {self.age} years old")
+
+class Dog:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+
+    def info(self):
+        print(f"I am dog.My name is {self.name}.I am {self.age} years old")
+
+c=Cat("abc",2)
+d=Dog("xyz",4)
+
+for animal in (c,d):
+    animal.info()
+    
+
+#encapsulation
+
+Describes the idea of  wrapping data and methods that works on data within one unit
+It puts restructions on accessing the variables & methods & can prevent accidental modification
+
+private: objct's variable can only be changed by an oject's method()
+
+protected: calling protected members of base class
+
+class Computer:
+    def __init__(self):
+        self.__price=500
+
+    def sell(self):
+        print("sellinng price={}".format(self.__price))
+
+    def set_price(self,price):
+        self.__price=price
+
+    def __func(self):
+        print("it is private method")
+
+c=Computer()
+c.sell()
+
+c.__price=200
+c.sell()
+
+c.set_price(200)
+c.sell()
+
+c._Computer__func()   #invoking private method ..... object._classnameprivatemethodname 
