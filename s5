@@ -1,3 +1,90 @@
+#hybrid inheritance
+
+class School:
+    def func1(self):
+        print("this function is in school")
+
+class Student1(School):
+    def func2(self):
+        print("this is in student 1")
+
+class Student2(School):
+    def func3(self):
+        print("this is in studet2")
+
+class Student3(Student1,School):
+    def func4(self):
+        print("this is in student 3")
+
+c2=Student2()
+c2.func3()
+c2.func1()
+
+c3=Student3()
+c3.func1()
+c3.func2()
+c3.func4()
+
+
+
+#super function
+
+
+class Animals:
+    def __init__(self):
+        self.legs=4
+        self.domestic=True
+        self.tail=True
+        self.mammals=True
+
+    def isMammal(self):
+        if self.mammals:
+            print("it is a mammal")
+
+    def isDomestic(self):
+        if self.domestic:
+            print("it is domestic animal")
+
+class Dog(Animals):
+    def __init__(self):
+        super().__init__()
+
+    def isMammal(self):     
+        super().isMammal()
+
+class Cow(Animals):
+    def __init__(self):
+        super().__init__()
+
+    def hastailAndlegs(self):
+        if self.tail and self.legs==4:
+            print("has 4 legs and one tail")
+
+d=Dog()
+d.isMammal()
+d.isDomestic()
+
+c=Cow()
+c.hastailAndlegs()
+c.isDomestic()
+c.isMammal()
+
+
+#method overiding
+
+class Parent:
+    def func1(self):
+        print("this is in parent class")
+
+class Child(Parent):
+    def func1(self):
+        print("this is in child class")
+        super().func1()
+
+c=Child()
+c.func1()
+
+
 #abstraction
 
 It is used to hide irrelevant data/class in order to reduce the complexity and enhancement of application efficiency
