@@ -79,3 +79,272 @@ print(o.calculate_bill_amount())
 r=RegularCustomer("xyz",4)
 print(r.calculate_bill_amount())
 
+'''oop assignment 5'''
+
+types=["small","medium"]
+
+class Customer:
+    def __init__(self,customer_name,quantity):
+        self.__customer_name=customer_name
+        self.__quantity=quantity
+
+    def get_customer_name(self):
+        return self.__customer_name
+
+    def get_quantity(self):
+        return self.__quantity
+
+    def validate_quantity(self):
+        if self.__quantity in range(1,6):
+            return True
+        else:
+            return False
+
+class Pizzaservice:
+    counter=100
+    def __init__(self,customer,pizza_type,additional_topping):
+        self.__customer=customer
+        self.__pizza_type=pizza_type
+        self.__additional_toppping=additional_topping
+        self.pizzacost=0
+        self.__service_id=None
+
+    def get_customer(self):
+        return self.__customer
+
+    def get_pizza_type(self):
+        return self.__pizza_type
+
+    def get_additional_toppping(self):
+        return self.__additional_toppping
+
+    def get_pizzacost(self):
+        return self.pizzacost
+
+    def get_service_id(self):
+        return self.__service_id
+
+    def validate_piza_type(self):
+        if self.__pizza_type.lower() in types:
+            return True
+        else:
+            return False
+
+    def calculate_pizza_cost(self):
+        if self.validate_piza_type() and Customer.validate_quantity(self.__customer):
+            if self.__pizza_type.lower()=="small":
+                self.pizzacost=150*Customer.get_quantity(self.__customer)
+                if self.__additional_toppping:
+                    self.pizzacost+=35*Customer.get_quantity(self.__customer)
+            if self.__pizza_type.lower()=="medium":
+                self.pizzacost=200*Customer.get_quantity(self.__customer)
+                if self.__additional_toppping:
+                    self.pizzacost+=50*Customer.get_quantity(self.__customer)
+            if not self.__service_id:
+                self.__service_id=self.__pizza_type[0]+str(Pizzaservice.counter+1)
+                Pizzaservice.counter+1
+            
+        else:
+            self.pizzacost=-1
+
+class Doordelivery(Pizzaservice):
+    def __init__(self,customer,pizza_type,additional_topping,distance_in_kms):
+        self.__delivery_charge=0
+        self.__distance_in_kms=distance_in_kms
+        Pizzaservice.__init__(self,customer,pizza_type,additional_topping)
+
+    def validate_distance_in_kms(self):
+        if self.__distance_in_kms in range(1,11):
+            return True
+        else:
+            return False
+
+    def get_delivery_charge(self):
+        return self.__delivery_charge
+
+    def get_distance_in_kms(self):
+        return self.__distance_in_kms
+
+    def calculate_pizza_cost(self):
+        if self.validate_distance_in_kms():
+            Pizzaservice.calculate_pizza_cost(self)
+            if self.pizzacost!=-1:
+                distance=1
+                while(distance<=self.__distance_in_kms):
+                    if distance in range(1,6):
+                        self.pizzacost+=5
+                    if distance in range(6,11):
+                        self.pizzacost+=7
+                    distance+=1
+        else:
+            self.pizzacost=-1
+
+c=Customer("Abc",5)
+#p=Pizzaservice(c,"medium",True)
+d=Doordelivery(c,"medium",True,5)
+
+d.calculate_pizza_cost()
+
+print(d.get_pizzacost())
+
+
+
+'''
+"WonderLand" water theme park wants to generate tickets for its customers.
+Complete the implementation of the requirement based on the given class diagram and code.
+       
+Class Description:
+Theme Park class: Complete the class based on comments given in starter code
+Ticket class: Complete the class based on comments given in starter code
+Customer class:
+
+Initialize points_earned, food_coupon and ticket to 0, "No" and a Ticket object respectively in the constructor
+
+play_game():
+Calculate total points based on the list of games played by the customer
+Update attribute, points_earned with the calculated value
+ThemePark allows a free ride on Game 2 if the customer has opted for Game 3. 
+If this is satisfied, add "Game2" to list_of_games and include its points to total points
+
+update_food_coupon(): They provide food coupon to a customer who has opted Game 4 and has earned more than 15 points.
+Update attribute, food_coupon status to "Yes" if the above rule is satisfied
+
+book_ticket():
+Calculate ticket amount
+If amount can be calculated, generate ticket id, play game, update food coupon and return true
+Else, return false
+Note: Perform case sensitive string comparison
+'''
+
+
+class ThemePark:
+    #dict_of_games contains the game name as key, price/ride and points that can be earned by customer in a list as value
+    dict_of_games={"Game1":[35.5,5], "Game2":[40.0,6],"Game3":[120.0,10], "Game4":[60.0,7],"Game5":[25.0,4]}
+
+    @staticmethod
+    def validate_game(game_input):
+        if game_input.title() in ThemePark.dict_of_games.keys():
+            return True
+        else:
+            False
+    
+    @staticmethod
+    def get_points(game_input):
+        for game,points in ThemePark.dict_of_games.items():
+            if game_input.title()==game:
+                return points[1]
+    @staticmethod
+    def get_amount(game_input):
+        for game,points in ThemePark.dict_of_games.items():
+            if game_input.title()==game:
+                return points[0]
+
+class Ticket:
+    __ticket_count=200
+    def __init__(self):
+        self.__ticket_id=None
+        self.__ticket_amount=0
+
+    def generate_ticket_id(self):
+        self.__ticket_id=Ticket.__ticket_count+1
+        Ticket.__ticket_count+=1
+
+    def calculate_amount(self, list_of_games):
+        for game in list_of_games:
+            if ThemePark.validate_game(game):
+                self.__ticket_amount+=ThemePark.get_amount(game)
+            else:
+                self.__ticket_amount=0
+                return False
+        return True
+
+    def get_ticket_id(self):
+        return self.__ticket_id
+
+    def get_ticket_amount(self):
+        return self.__ticket_amount
+
+class Customer:
+    def __init__(self,name,list_of_games):
+        self.__name=name
+        self.__list_of_games=list_of_games
+        self.__ticket=Ticket()
+        self.__points_earned=0
+        self.__food_coupon="No"
+               
+    def play_game(self):
+        for game in self.__list_of_games:
+            self.__points_earned+=ThemePark.get_points(game)
+            if game=="Game3":
+                self.__list_of_games.append("Game2")
+                
+    def update_food_coupon(self):
+        if "Game4" in self.__list_of_games and self.__points_earned>15:
+            self.__food_coupon="Yes"
+
+    def book_ticket(self):
+        if Ticket.calculate_amount(self.__ticket,self.__list_of_games):
+            Ticket.generate_ticket_id(self.__ticket)
+            self.play_game()
+            self.update_food_coupon()
+            return True
+        else:
+            return False
+
+    def get_name(self):
+        return self.__name
+
+    def get_list_of_games(self):
+        return self.__list_of_games
+
+    def get_ticket(self):
+        return self.__ticket
+
+    def get_food_coupon(self):
+        return self.__food_coupon
+
+    def get_points_earned(self):
+        return self.__points_earned
+
+t=Ticket()
+c=Customer("ABC",["Game4","Game3","Game2"])
+
+print(t.calculate_amount(["Game4","Game3","Game2"]))
+print(t.get_ticket_amount())
+
+t.generate_ticket_id()
+print(t.get_ticket_id())
+
+c.play_game()
+c.update_food_coupon()
+print(c.get_points_earned())
+print(c.get_food_coupon())
+print(c.book_ticket())
+
+
+'''
+Given an integer between 0 and 26, make a variable (self.answer). 
+That variable would be assigned to a string in this format:
+"nines:your answer, threes:your answer, ones:your answer"
+You need to find out how many ones, threes, and nines 
+it would at least take for the number of each to add up to the given integer when multiplied by one, three or nine (depends).
+
+Examples
+ones_threes_nines(10) ➞ "nines:1, threes:0, ones:1"
+
+ones_threes_nines(15) ➞ "nines:1, threes:2, ones:0"
+
+ones_threes_nines(22) ➞ "nines:2, threes:1, ones:1"
+Notes
+•	Each of the ones, threes or nines could only be either 0, 1 or 2.
+•	You must use a class.
+•	After the comma, you must put a space.
+
+'''
+
+class Ones_three_nine:
+    def __init__(self,n):
+        self.answer='nines:{} threes:{} ones:{}'.format(n//9,(n%9)//3,n%3)
+
+o=Ones_three_nine(10)
+print(o.answer)
