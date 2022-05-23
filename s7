@@ -1,0 +1,275 @@
+'''class Stack:
+    def __init__(self,max_size):
+        self.__max_size=max_size
+        self.__top=-1
+        self.__elements=[None]*self.__max_size
+
+    def full(self):
+        if self.__top==self.__max_size-1:
+            return True
+        else:
+            return False
+
+    def push(self,data):
+        if self.full():
+            print("Stack is overflow")
+        else:
+            self.__top+=1
+            self.__elements[self.__top]=data
+
+    def empty(self):
+        if self.__top==-1:
+            return True
+        else:
+            return False
+
+    def pop(self):
+        if self.empty():
+            print("stack is underlow")
+        else:
+           data=self.__elements[self.__top]
+           self.__top-=1
+           return data
+
+    def display(self):
+        if self.empty():
+            print("stack is empty") 
+        else:
+            index=self.__top
+            while(index>=0):
+                print(self.__elements[index])
+                index-=1
+
+s=Stack(5)
+s.push("p1")
+s.push("p2")
+s.push("p3")
+s.push(5)
+s.push(34)
+s.push(4)
+print("stack is :")
+s.display()
+s.pop()
+s.pop()
+print("stack is :")
+s.display()
+s.pop()
+s.pop()'''
+
+
+'''
+Given a stack of integers, write a python program that updates the input stack 
+such that all occurrences of the smallest values are at the bottom of the stack, 
+while the order of the other elements remains the same.
+
+For example:
+Input stack (top-bottom) :   5 66  5  8  7
+Output:  66  8  7  5  5
+
+'''
+
+'''class Stack:
+    def __init__(self,max_size):
+        self.__max_size=max_size
+        self.__top=-1
+        self.__elements=[None]*self.__max_size
+
+    def full(self):
+        if self.__top==self.__max_size-1:
+            return True
+        else:
+            return False
+
+    def push(self,data):
+        if self.full():
+            print("Stack is overflow")
+        else:
+            self.__top+=1
+            self.__elements[self.__top]=data
+
+    def empty(self):
+        if self.__top==-1:
+            return True
+        else:
+            return False
+
+    def pop(self):
+        if self.empty():
+            print("stack is underlow")
+        else:
+           data=self.__elements[self.__top]
+           self.__top-=1
+           return data
+
+    def display(self):
+        if self.empty():
+            print("stack is empty") 
+        else:
+            index=self.__top
+            while(index>=0):
+                print(self.__elements[index])
+                index-=1
+
+def change_smallest_value(number_stack):
+    l=[]
+    while(not number_stack.empty()):
+        l.append(number_stack.pop())
+    minimum=min(l)
+    counter=l.count(min(l))
+    for i in range(counter):
+        number_stack.push(minimum)
+    for element in l[::-1]:
+        if element!=minimum:
+            number_stack.push(element)
+    return number_stack
+
+number_stack=Stack(8)
+number_stack.push(7)
+number_stack.push(8)
+number_stack.push(5)
+number_stack.push(66)
+number_stack.push(5)
+print("initial stack:")
+number_stack.display()
+change_smallest_value(number_stack)
+print("After updation")
+number_stack.display()'''
+
+#queue
+'''
+class Queue:
+    def __init__(self,max_size):
+        self.__max_size=max_size
+        self.__elements=[None]*max_size
+        self.__rear=-1
+        self.__front=0
+
+    def full(self):
+        if self.__rear==self.__max_size-1:
+            return True
+        else:
+            return False
+
+    def enqueue(self,data):
+        if self.full():
+            print("overflow")
+        else:
+            self.__rear+=1
+            self.__elements[self.__rear]=data
+
+    def empty(self):
+        if self.__front>self.__rear:
+            return True
+        else:
+            return False
+
+    def dequeue(self):
+        if self.empty():
+            print("underflow")
+        else:
+            data=self.__elements[self.__front]
+            self.__front+=1
+            return data
+
+    def display(self):
+        for index in range(self.__front,self.__rear+1):
+            print(self.__elements[index])
+
+q=Queue(5)
+q.enqueue(45)
+q.enqueue(78)
+q.enqueue(8)
+#q.display()
+q.dequeue()
+q.dequeue()
+q.dequeue()
+q.dequeue()'''
+
+
+'''
+Given a queue of whole numbers. Write a python function to return a new queue which contains the evenly divisible numbers.
+Note: A number is said to be evenly divisible if it is divisible by all the numbers in the given range without any remainder. 
+Consider the range to be from 1 to 10 (both inclusive).
+Assume that there will always be few elements in the input queue, which are evenly divisible by the numbers in the mentioned range.
+
+Example:
+
+Input Queue: 13983, 10080, 7113, 2520, 2500 (front - rear)
+Output Queue: 10080, 2520 (front-rear)
+
+'''
+class Queue:
+    def __init__(self,max_size):
+        self.__max_size=max_size
+        self.__elements=[None]*max_size
+        self.__rear=-1
+        self.__front=0
+
+    def full(self):
+        if self.__rear==self.__max_size-1:
+            return True
+        else:
+            return False
+
+    def enqueue(self,data):
+        if self.full():
+            print("overflow")
+        else:
+            self.__rear+=1
+            self.__elements[self.__rear]=data
+
+    def empty(self):
+        if self.__front>self.__rear:
+            return True
+        else:
+            return False
+
+    def dequeue(self):
+        if self.empty():
+            print("underflow")
+        else:
+            data=self.__elements[self.__front]
+            self.__front+=1
+            return data
+
+    def display(self):
+        for index in range(self.__front,self.__rear+1):
+            print(self.__elements[index])
+
+def check_numbers(number_queue):
+    queue1=Queue(5)
+    while(not number_queue.empty()):
+        status=0
+        element=number_queue.dequeue()
+        for i in range(1,11):
+            if element%i!=0:
+               status=1
+               break
+        if status==0:
+            queue1.enqueue(element)
+    return queue1
+
+number_queue=Queue(5)
+number_queue.enqueue(13983)
+number_queue.enqueue(10080)
+number_queue.enqueue(7113)
+number_queue.enqueue(2520)
+number_queue.enqueue(2500)
+print("initial queue")
+number_queue.display()
+print("new queue")
+output=check_numbers(number_queue)
+output.display()
+
+'''
+Given two queues, one integer queue and another character queue, write a python program to merge them to form a single queue.  
+Follow the below rules for merging:
+•	Merge elements at the same position starting with the integer queue.
+•	If one of the queues has more elements than the other, add all the additional elements at the end of the output queue.
+Note : max_size of the merged queue should be the sum of the size of both the queues. 
+
+For example,  
+Input -- queue1: 3,6,8     queue2: b,y,u,t,r,o
+Output -- 3,b,6,y,8,u,t,r,o
+
+'''
