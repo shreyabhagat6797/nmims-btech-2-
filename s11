@@ -1,0 +1,119 @@
+#selection sort
+
+'''def swap(num_list,first_index,second_index):
+    temp=num_list[first_index]
+    num_list[first_index]=num_list[second_index]
+    num_list[second_index]=temp
+
+def find_min(num_list,start_index):
+    minimum=min(num_list[start_index::])
+    return  num_list.index(minimum)
+
+def selection_sort(num_list):
+    for i in range(len(num_list)):
+        index=find_min(num_list,i)
+        swap(num_list,i,index)
+
+num_list=[64,25,12,22,11]
+print("before sorting: ",num_list)
+selection_sort(num_list)
+print("after sorting:",num_list)'''
+
+#bubble sort
+
+
+'''def swap(num_list,first_index,second_index):
+    temp=num_list[first_index]
+    num_list[first_index]=num_list[second_index]
+    num_list[second_index]=temp
+
+def bubble_sort(num_list):
+    total_passes=0
+    end_index=len(num_list)
+    for index1 in range(0,end_index-1):
+        swapped=False
+        total_passes+=1
+        for index2 in range(0,end_index-index1-1):
+            if num_list[index2]>num_list[index2+1]:
+                swap(num_list,index2,index2+1)
+                swapped=True
+        if swapped==False:
+            break
+    return total_passes
+
+num_list=[-2,45,0,11,-9]
+print("bubble sort-no. of passes ",bubble_sort(num_list))
+print(num_list)'''
+
+#merge sort
+
+'''def merge_sort(num_list):
+    low=0
+    high=len(num_list)-1
+    if low==high:
+        return num_list
+    else:
+        left_list=num_list[:(len(num_list)//2)]
+        right_list=num_list[(len(num_list)//2):]
+        list1=merge_sort(left_list)
+        list2=merge_sort(right_list)
+        sorted_list=merge(list1,list2)
+        return sorted_list
+
+def merge(left_list,right_list):
+    i,j=0,0
+    sorted_list=[]
+    while (i<len(left_list) and j<len(right_list)):
+        if left_list[i]<=right_list[j]:
+            sorted_list.append(left_list[i])
+            i+=1
+        else:
+            sorted_list.append(right_list[j])
+            j+=1
+    if i<len(left_list):
+        sorted_list.extend(left_list[i::])
+    if j<len(right_list):
+        sorted_list.extend(right_list[j::])
+    return sorted_list
+
+num_list=[6,5,12,10,9,1]
+print("before: ",num_list)
+sorted_list=merge_sort(num_list)
+print("after: ",sorted_list)'''
+
+#quick sort
+
+def swap(num_list,first_index,second_index):
+    temp=num_list[first_index]
+    num_list[first_index]=num_list[second_index]
+    num_list[second_index]=temp
+
+def quick_sort(num_list,low,high):
+    if (low>=high):
+        return 
+    split_point=partition(num_list,low,high)
+    quick_sort(num_list,low,split_point-1)
+    quick_sort(num_list,split_point+1,high)
+
+def partition(num_list,low,high):
+    pivot=num_list[low]
+    i=low+1
+    j=high
+    done=False
+    while not done:
+        while i<=j and num_list[i]<=pivot:
+            i+=1
+        while i<=j and num_list[j]>=pivot:
+            j-=1   
+        if j<=i:
+            done=True
+        else:
+            swap(num_list,i,j)
+    swap(num_list,low,j)
+    return j
+
+num_list=[3,1,0,4,2]
+print("before ",num_list)
+l=len(num_list)
+quick_sort(num_list,0,l-1)
+print("After ",num_list)
